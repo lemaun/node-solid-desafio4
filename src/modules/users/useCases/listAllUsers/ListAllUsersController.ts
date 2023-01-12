@@ -5,10 +5,10 @@ class ListAllUsersController {
   constructor(private listAllUsersUseCase: ListAllUsersUseCase) { }
 
   handle(request: Request, response: Response): Response {
-    const user_id = request.params.user_id;
+    const user_id = String(request.headers.user_id);
     try {
       const all = this.listAllUsersUseCase.execute({ user_id });
-      return response.json(all);
+      return response.send(all);
     } catch (err) {
       return response.status(400).json({ error: err });
     }
